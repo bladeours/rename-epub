@@ -20,7 +20,7 @@ parser.add_argument(
 parser.add_argument("-d", "--directory", help="default is '.'")
 parser.add_argument("-v", "--verbose", action="store_true", help="adds extra verbose")
 parser.add_argument(
-    "-l", "--logging", choices=["DEBUG", "INFO", "WARNING", "ERROR", "CRITICAL"], default="INFO", help="logging level"
+    "-l", "--logging", choices=["DEBUG", "INFO", "WARNING", "ERROR", "CRITICAL"], default="WARNING", help="logging level"
 )
 parser.add_argument("-r", "--replace", action="store_true", help="should replace file instead of creating copy")
 parser.add_argument("-o", "--output", help="output folder to copy file with new name")
