@@ -8,17 +8,18 @@ import sys
 import os
 import shutil
 from pathlib import Path
+from pathvalidate import sanitize_filename
+
 
 log = logging.getLogger(__name__)
 name_dict = {}
-parser = argparse.ArgumentParser(prog="RenameEPUB", description="program change name of file using metadata from epub")
+parser = argparse.ArgumentParser(prog="rename", description="program change name of file using metadata from epub")
 
 parser.add_argument("-f", "--file")
 parser.add_argument(
     "-F", "--format", default="{creator} - {title}", help="format of name, default is '{creator} - {title}'"
 )
 parser.add_argument("-d", "--directory", help="default is '.'")
-parser.add_argument("-v", "--verbose", action="store_true", help="adds extra verbose")
 parser.add_argument(
     "-l", "--logging", choices=["DEBUG", "INFO", "WARNING", "ERROR", "CRITICAL"], default="WARNING", help="logging level"
 )
@@ -73,7 +74,7 @@ def get_new_filename(old_filename: str) -> str:
         Path(dirname).mkdir(parents=True, exist_ok=True)
     else:
         dirname = os.path.dirname(old_filename)
-    new_filename = os.path.join(dirname, formatted_name)
+    new_filename = os.path.join(dirname, sanitize_filename(formatted_name))
     new_filename = add_suffix_if_needed(new_filename)
     log.info(f"new filename: '{new_filename}'")
     return new_filename
